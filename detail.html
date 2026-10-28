@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>应用详情</title>
+<link rel="shortcut icon" href="https://www.nkcswx.cn/Public/Home/default/img/favicon.ico"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+html,body{min-height:100vh;width:100%;}
+body{
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    transition:all 0.4s ease;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--bg-url);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(var(--bg-blur));
+}
+
+
+/* 和首页主题变量完全对齐！ */
+body[data-theme="standard-light"] {
+    --nav-bg: rgba(255, 255, 255, 0.48);
+    --nav-blur: 18px;
+    --text-color: #222222;
+    --card-bg: rgba(240, 240, 240, 0.55);
+    --card-blur: 12px;
+    --tag-bg: rgba(255, 255, 255, 0.40);
+    --input-bg: rgba(255, 255, 255, 0.55);
+    background-image: url('bg/bg-standard-light.jpg');
+}
+body[data-theme="standard-dark"] {
+    --nav-bg: rgba(15, 15, 15, 0.48);
+    --nav-blur: 18px;
+    --text-color: #eeeeee;
+    --card-bg: rgba(35, 35, 35, 0.55);
+    --card-blur: 12px;
+    --tag-bg: rgba(60, 60, 60, 0.40);
+    --input-bg: rgba(60, 60, 60, 0.55);
+    background-image: url('bg/bg-standard-dark.jpg');
+}
+body[data-theme="polar-day"] {
+    --nav-bg: rgba(255, 255, 255, 0.867);
+    --nav-blur: 20px;
+    --text-color: #1a2a3a;
+    --card-bg: rgba(255, 255, 255, 0.42);
+    --card-blur: 25px;
+    --tag-bg: rgba(255, 255, 255, 0.38);
+    --input-bg: rgba(255, 255, 255, 0.48);
+    background-image: url('https://www.nkcswx.cn/en/Public/Home/default/img/hb02img04.jpg');
+}
+body[data-theme="polar-night"] {
+    --nav-bg: rgba(0, 0, 0, 0.615);
+    --nav-blur: 22px;
+    --text-color: #ffffff;
+    --card-bg: rgba(0, 0, 0, 0.809);
+    --card-blur: 25px;
+    --tag-bg: rgb(26, 26, 26);
+    --input-bg: rgba(100, 100, 100, 0.45);
+    background-image: url('bg/bg-polar-night.jpg');
+}
+body[data-theme="transparent-light"] { /* 通透浅 */
+    --nav-bg: rgba(255, 255, 255, 0.18);
+    --nav-blur: 12px;
+    --text-color: #252525;
+    --card-bg: rgba(190, 190, 190, 0.087);
+    --card-blur: 12px;
+    --tag-bg: rgba(255, 255, 255, 0.12);
+    --input-bg: rgba(255, 255, 255, 0.20);
+    background-image: url('bg/bg-transparent-light.jpg');
+}
+body[data-theme="transparent-dark"] { /* 通透深 */
+    --nav-bg: rgba(0, 0, 0, 0.126);
+    --nav-blur: 12px;
+    --text-color: #ffffff;
+    --card-bg: rgba(0,0,0,0.18);
+    --card-blur: 12px;
+    --tag-bg: rgba(27, 27, 27, 0.12);
+    --input-bg: rgba(255,255,255,0.16);
+    background-image: url('bg/bg-transparent-dark.jpg');
+}
+
+.navbar{
+    width:100%;height:72px;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 32px;
+    background:var(--nav-bg);
+    backdrop-filter:blur(var(--nav-blur));
+    -webkit-backdrop-filter:blur(var(--nav-blur));
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    color:var(--text-color);
+    position:sticky;top:0;z-index:99;
+}
+.nav-title{font-size:22px;font-weight:700;}
+
+.wrap{
+    max-width:900px;margin:30px auto;padding:0 24px;
+    color:var(--text-color);
+}
+.detail-card{
+    background:var(--card-bg);
+    backdrop-filter:blur(var(--card-blur));
+    -webkit-backdrop-filter:blur(var(--card-blur));
+    border-radius:18px;padding:24px;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 8px 26px rgba(0,0,0,0.12);
+}
+.head-row{display:flex;gap:18px;align-items:flex-start;margin-bottom:18px;}
+.detail-icon{width:72px;height:72px;border-radius:14px;object-fit:cover;}
+.info h1{font-size:24px;margin-bottom:6px;}
+.category-text{opacity:0.75;font-size:14px;margin-bottom:8px;}
+
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;}
+.tag{
+    font-size:12px;padding:4px 9px;border-radius:6px;
+    background:var(--tag-bg);color:var(--text-color);
+}
+
+.desc-block{margin-bottom:24px;line-height:1.7;font-size:15px;}
+.download-list{display:flex;flex-direction:column;gap:10px;}
+.download-item{
+    padding:12px 16px;border-radius:10px;
+    background:var(--input-bg);
+    backdrop-filter:blur(var(--card-blur));
+    display:flex;justify-content:space-between;align-items:center;
+}
+.download-item a{color:var(--text-color);text-decoration:none;font-weight:500;}
+
+@media(max-width:600px){
+    .head-row{flex-direction:column;}
+    .navbar{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-title" id="pageTitle">详情 - </div>
+</nav>
+<div class="wrap">
+    <div class="detail-card">
+        <div class="head-row">
+            <img id="appIcon" class="detail-icon" src="" alt="">
+            <div class="info">
+                <h1 id="appName"></h1>
+                <div class="category-text">类别：<span id="appCategory"></span></div>
+                <div class="tags-row" id="platformTags"></div>
+            </div>
+        </div>
+        <div class="desc-block">
+            <h3 style="margin-bottom:8px;">简介</h3>
+            <div id="appDesc"></div>
+        </div>
+        <div>
+            <h3 style="margin-bottom:10px;">下载</h3>
+            <div class="download-list" id="downloadArea"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'dipontstore_theme';
+// 应用数据库（宣传卡片也放这里）
+const appDB = {
+    "demo-one":{
+        icon:"icons/app-icon-example.png",
+        name:"示例应用",
+        category:"工具",
+        desc:"这是一段应用简介，在这里填写软件功能、版本说明等内容。支持多平台打包下载。",
+        downloads:[
+            {platform:"Windows x64",url:"#"},
+            {platform:"Windows ARM",url:"#"},
+            {platform:"macOS ARM64",url:"#"},
+            {platform:"APK v8a",url:"#"},
+            {platform:"iOS arm64",url:"#"},
+            {platform:"鸿蒙(手机)",url:"#"}
+        ]
+    },
+    "linux-demo":{
+        icon:"icons/app-icon-example-2.png",
+        name:"Linux工具",
+        category:"实用",
+        desc:"支持Deb、AppImage包，同时适配鸿蒙电脑端。",
+        downloads:[
+            {platform:"Linux amd64.deb",url:"#"},
+            {platform:"Linux amd64.AppImage",url:"#"},
+            {platform:"鸿蒙(电脑)",url:"#"}
+        ]
+    },
+    "promo001":{
+        icon:"icons/promo-preview.jpg",
+        name:"重磅影音播放器",
+        category:"影音",
+        desc:"支持几乎全部视频格式，硬解加速，Linux、鸿蒙电脑原生适配，无广告纯净版。",
+        downloads:[
+            {platform:"Linux amd64.AppImage",url:"#"},
+            {platform:"鸿蒙(电脑)",url:"#"}
+        ]
+    }
+};
+
+// 读取url参数
+function getUrlParam(name){
+    const u = new URLSearchParams(location.search);
+    return u.get(name);
+}
+const appId = getUrlParam("id");
+const data = appDB[appId];
+
+if(!data){
+    document.querySelector(".wrap").innerHTML = `<div style="text-align:center;padding:40px;">找不到这个应用</div>`;
+    document.getElementById("pageTitle").innerText = "详情 - 不存在";
+}else{
+    document.getElementById("pageTitle").innerText = "详情 - " + data.name;
+    document.getElementById("appIcon").src = data.icon;
+    document.getElementById("appName").innerText = data.name;
+    document.getElementById("appCategory").innerText = data.category;
+    document.getElementById("appDesc").innerText = data.desc;
+
+    // 渲染平台标签
+    const tagWrap = document.getElementById("platformTags");
+    tagWrap.innerHTML = "";
+    data.downloads.forEach(d=>{
+        const span = document.createElement("span");
+        span.className = "tag";
+        span.innerText = d.platform;
+        tagWrap.appendChild(span);
+    })
+    // 渲染下载链接：全部新开标签 target="_blank"
+    const dlWrap = document.getElementById("downloadArea");
+    dlWrap.innerHTML = "";
+    data.downloads.forEach(d=>{
+        const div = document.createElement("div");
+        div.className = "download-item";
+        div.innerHTML = `<span>${d.platform}</span> <a href="${d.url}" target="_blank" rel="noopener noreferrer">下载</a>`;
+        dlWrap.appendChild(div);
+    })
+}
+
+// 主题同步
+function applyTheme(key){
+    document.body.setAttribute("data-theme",key);
+}
+function getSystemTheme(){
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+    return dark.matches ? "standard-dark":"standard-light";
+}
+const saved = localStorage.getItem(STORAGE_KEY);
+applyTheme(saved ? saved : getSystemTheme());
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change",()=>{
+    if(!localStorage.getItem(STORAGE_KEY)) applyTheme(getSystemTheme());
+})
+</script>
+</body>
+</html>

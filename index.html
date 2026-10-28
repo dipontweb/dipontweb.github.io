@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dipontstore</title>
+<link rel="shortcut icon" href="https://www.nkcswx.cn/Public/Home/default/img/favicon.ico"/>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+html, body {
+    min-height: 100vh;
+    width: 100%;
+}
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.4s ease;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--bg-url);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(var(--bg-blur));
+}
+
+
+/* ========== 5套主题（极致通透拆成：通透浅、通透深） ========== */
+body[data-theme="standard-light"] {
+    --nav-bg: rgba(255, 255, 255, 0.48);
+    --nav-blur: 18px;
+    --text-color: #222222;
+    --card-bg: rgba(240, 240, 240, 0.55);
+    --card-blur: 12px;
+    --tag-bg: rgba(255, 255, 255, 0.40);
+    --input-bg: rgba(255, 255, 255, 0.55);
+    background-image: url('bg/bg-standard-light.jpg');
+    --bg-blur: 10px;
+}
+body[data-theme="standard-dark"] {
+    --nav-bg: rgba(15, 15, 15, 0.48);
+    --nav-blur: 18px;
+    --text-color: #eeeeee;
+    --card-bg: rgba(35, 35, 35, 0.55);
+    --card-blur: 12px;
+    --tag-bg: rgba(60, 60, 60, 0.40);
+    --input-bg: rgba(60, 60, 60, 0.55);
+    background-image: url('bg/bg-standard-dark.jpg');
+    --bg-blur: 10px;
+}
+body[data-theme="polar-day"] {
+    --nav-bg: rgba(255, 255, 255, 0.867);
+    --nav-blur: 20px;
+    --text-color: #1a2a3a;
+    --card-bg: rgba(255, 255, 255, 0.42);
+    --card-blur: 25px;
+    --tag-bg: rgba(255, 255, 255, 0.38);
+    --input-bg: rgba(255, 255, 255, 0.48);
+    background-image: url('https://www.nkcswx.cn/en/Public/Home/default/img/hb02img04.jpg');
+    --bg-blur: 10px;
+}
+body[data-theme="polar-night"] {
+    --nav-bg: rgba(0, 0, 0, 0.615);
+    --nav-blur: 22px;
+    --text-color: #ffffff;
+    --card-bg: rgba(0, 0, 0, 0.809);
+    --card-blur: 25px;
+    --tag-bg: rgb(26, 26, 26);
+    --input-bg: rgba(100, 100, 100, 0.45);
+    background-image: url('bg/bg-polar-night.jpg');
+    --bg-blur: 10px;
+}
+body[data-theme="transparent-light"] { /* 通透浅 */
+    --nav-bg: rgba(255, 255, 255, 0.18);
+    --nav-blur: 12px;
+    --text-color: #252525;
+    --card-bg: rgba(190, 190, 190, 0.087);
+    --card-blur: 12px;
+    --tag-bg: rgba(255, 255, 255, 0.12);
+    --input-bg: rgba(255, 255, 255, 0.20);
+    background-image: url('bg/bg-transparent-light.jpg');
+    --bg-blur: 10px;
+}
+body[data-theme="transparent-dark"] { /* 通透深 */
+    --nav-bg: rgba(0, 0, 0, 0.126);
+    --nav-blur: 12px;
+    --text-color: #ffffff;
+    --card-bg: rgba(0,0,0,0.18);
+    --card-blur: 12px;
+    --tag-bg: rgba(27, 27, 27, 0.12);
+    --input-bg: rgba(255,255,255,0.16);
+    background-image: url('bg/bg-transparent-dark.jpg');
+    --bg-blur: 10px;
+}
+
+.navbar {
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(var(--nav-blur));
+    -webkit-backdrop-filter: blur(var(--nav-blur));
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-color);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap:14px;
+}
+.nav-left img {
+    height:42px;
+    width:auto;
+}
+.nav-title {
+    font-size:22px;
+    font-weight:700;
+}
+.nav-right {
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+.nav-search {
+    padding:9px 14px;
+    border:none;
+    border-radius:12px;
+    background:var(--input-bg);
+    color:var(--text-color);
+    font-size:14px;
+    backdrop-filter: blur(var(--card-blur));
+    width:220px;
+}
+.nav-search::placeholder {
+    color:var(--text-color);
+    opacity:0.6;
+}
+.nav-select {
+    padding:7px 12px;
+    border-radius:8px;
+    border:none;
+    background:var(--card-bg);
+    color:var(--text-color);
+    backdrop-filter: blur(var(--card-blur));
+}
+
+.main-content {
+    padding:28px 32px;
+}
+.grid-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap:16px;
+}
+/* 普通应用卡片 */
+.app-card {
+    cursor: pointer;
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--card-blur));
+    -webkit-backdrop-filter: blur(var(--card-blur));
+    border-radius:14px;
+    padding:16px;
+    color:var(--text-color);
+    border:1px solid rgba(255,255,255,0.1);
+    transition:0.25s ease;
+}
+.app-card:hover {
+    transform: translateY(-3px);
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+}
+.app-card.hidden-item {
+    display:none;
+}
+.app-icon {
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    object-fit:cover;
+    margin-bottom:10px;
+}
+.app-name {
+    font-size:17px;
+    font-weight:600;
+    margin-bottom:4px;
+}
+.app-desc {
+    font-size:13px;
+    opacity:0.78;
+    margin-bottom:12px;
+    min-height:34px;
+    overflow:hidden;
+}
+.platform-tags {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+.platform-tag {
+    font-size:11px;
+    padding:3px 7px;
+    border-radius:6px;
+    background:var(--tag-bg);
+}
+
+/* ===== 宣传宽卡片 占2列 ===== */
+.promo-card {
+    grid-column: span 2;
+    background: var(--card-bg);
+    backdrop-filter: blur(var(--card-blur));
+    -webkit-backdrop-filter: blur(var(--card-blur));
+    border-radius:14px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,0.1);
+    display:flex;
+    gap:16px;
+    align-items:stretch;
+    color:var(--text-color);
+    transition:0.25s ease;
+}
+.promo-card.hidden-item {
+    display:none;
+}
+.promo-card:hover {
+    transform: translateY(-3px);
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+}
+.promo-preview {
+    width: 42%;
+    border-radius:10px;
+    object-fit:cover;
+}
+.promo-right {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+.promo-title {
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+.promo-desc {
+    font-size:14px;
+    opacity:0.78;
+    line-height:1.6;
+    margin-bottom:10px;
+}
+.promo-tags {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-bottom:14px;
+}
+.promo-btn {
+    align-self:flex-start;
+    padding:9px 16px;
+    border-radius:8px;
+    background:var(--input-bg);
+    color:var(--text-color);
+    text-decoration:none;
+    font-weight:500;
+}
+
+@media(max-width:768px) {
+    .promo-card {
+        grid-column: span 1;
+        flex-direction:column;
+    }
+    .promo-preview {
+        width:100%;
+        height:160px;
+    }
+    .navbar {
+        padding:0 16px;
+    }
+    .main-content {
+        padding:20px 16px;
+    }
+    .nav-search {
+        width:140px;
+    }
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-left">
+        <img src="https://www.nkcswx.cn/Public/Home/default/img/favicon.ico" alt="">
+        <div class="nav-title">Dipontstore</div>
+    </div>
+    <div class="nav-right">
+        <input id="searchInput" class="nav-search" placeholder="搜索应用">
+        <select id="categorySelect" class="nav-select">
+            <option value="">全部类别</option>
+            <option value="社交">社交</option>
+            <option value="实用">实用</option>
+            <option value="学习">学习</option>
+            <option value="影音">影音</option>
+            <option value="创意">创意</option>
+            <option value="工具">工具</option>
+            <option value="游戏">游戏</option>
+            <option value="其他">其他</option>
+        </select>
+        <select id="platformSelect" class="nav-select">
+            <option value="">全部平台</option>
+            <option value="w86">Windows x86</option>
+            <option value="w64">Windows x64</option>
+            <option value="warm">Windows ARM</option>
+            <option value="wuwp">Windows UWP 包</option>
+            <option value="m86">macOS x86‑64</option>
+            <option value="marm">macOS ARM64</option>
+            <option value="a7">APK v7a</option>
+            <option value="a8">APK v8a</option>
+            <option value="i64">iOS arm64</option>
+            <option value="i7">iOS ARMv7</option>
+            <option value="lx64deb">Linux amd64.deb</option>
+            <option value="la64deb">Linux arm64.deb</option>
+            <option value="la32deb">Linux arm32.deb</option>
+            <option value="lx64rpm">Linux amd64.rpm</option>
+            <option value="la64rpm">Linux arm64.rpm</option>
+            <option value="la32rpm">Linux arm32.rpm</option>
+            <option value="lx64tar">Linux amd64.tar.gz</option>
+            <option value="la64tar">Linux arm64.tar.gz</option>
+            <option value="la32tar">Linux arm32.tar.gz</option>
+            <option value="hmpc">鸿蒙(电脑)</option>
+            <option value="hmphone">鸿蒙(手机)</option>
+            <option value="other">其他</option>
+        </select>
+        <select id="themeSelect" class="nav-select">
+            <option value="standard-light">浅色模式(普通)</option>
+            <option value="standard-dark">深色模式(普通)</option>
+            <option value="polar-day">极昼浅</option>
+            <option value="polar-night">极夜深</option>
+            <option value="transparent-light">通透浅</option>
+            <option value="transparent-dark">通透深</option>
+        </select>
+    </div>
+</nav>
+
+<div class="main-content">
+    <div class="grid-wrap">
+        <!-- 普通应用卡片模板 -->
+        <div class="app-card"
+             data-app-id="demo-one"
+             data-category="实用"
+             data-tags="w64,warm,m86,marm,lx64deb,la64deb,la32deb,lx64rpm,la64rpm,la32rpm,lx64tar,la64tar,la32tar">
+            <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxj7kCzMIlSC20SNjaJf9GmESvWFqgy6FNrwzWSIu2lzePyWSz8zg09RAX43OFexidzEE3_7l3auaKk4w9ktJdqg-&format=source&h=307" alt="" class="app-icon">
+            <div class="app-name">VScode</div>
+            <div class="app-desc">你要此网站同款编辑器吗?Visual Studio Code 是一款轻量开源代码编辑器，支持几乎所有编程语言，拥有丰富扩展生态，支持语法高亮、智能补全、调试、Git 版本控制，跨平台运行，自定义程度高。</div>
+            <div class="platform-tags">
+                <span class="platform-tag">Windows x64</span>
+                <span class="platform-tag">Windows ARM</span>
+                <span class="platform-tag">macOS arm64</span>
+                <span class="platform-tag">macOS x86-64</span>
+                <span class="platform-tag">Linux主要版本</span>
+                <span class="platform-tag">Linux(arm32)(deb,rpm,tar.gz)</span>
+            </div>
+        </div>
+
+        <!-- ===== 宣传宽卡片（这个就是新增的，直接夹杂在卡片中间） ===== -->
+        <div class="promo-card"
+             data-app-id="vscode"
+             data-category="实用"
+             data-tags="macOS x86‑64,macOS ARM64,">
+            <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxj7kCzMIlSC20SNjaJf9GmESvWFqgy6FNrwzWSIu2lzePyWSz8zg09RAX43OFexidzEE3_7l3auaKk4w9ktJdqg-&format=source&h=307" alt="预览图" class="promo-preview">
+            <div class="promo-right">
+                <div>
+                    <div class="promo-title">重磅影音播放器</div>
+                    <div class="promo-desc">支持几乎全部视频格式，硬解加速，Linux、鸿蒙电脑原生适配，无广告纯净版。</div>
+                    <div class="promo-tags">
+                        <span class="platform-tag">影音</span>
+                        <span class="platform-tag">Linux amd64.AppImage</span>
+                        <span class="platform-tag">鸿蒙(电脑)</span>
+                    </div>
+                </div>
+                <a href="detail.html?id=promo001" class="promo-btn">查看详情</a>
+            </div>
+        </div>
+
+        <div class="app-card"
+             data-app-id="linux-demo"
+             data-category="实用"
+             data-tags="Linux amd64.deb,Linux amd64.AppImage,鸿蒙(电脑)">
+            <img src="icons/app-icon-example-2.png" alt="" class="app-icon">
+            <div class="app-name">Linux工具</div>
+            <div class="app-desc">支持Deb、AppImage包，同时适配鸿蒙电脑端。</div>
+            <div class="platform-tags">
+                <span class="platform-tag">Linux amd64.deb</span>
+                <span class="platform-tag">Linux amd64.AppImage</span>
+                <span class="platform-tag">鸿蒙(电脑)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'dipontstore_theme';
+const searchInput = document.getElementById('searchInput');
+const categorySelect = document.getElementById('categorySelect');
+const platformSelect = document.getElementById('platformSelect');
+const themeSelect = document.getElementById('themeSelect');
+const allCards = document.querySelectorAll('.app-card, .promo-card');
+
+// 卡片点击跳转详情
+document.querySelectorAll('.app-card').forEach(card=>{
+    card.onclick = ()=>{
+        const id = card.dataset.appId;
+        window.open(`detail.html?id=${id}`,"_blank");
+    }
+})
+
+// 筛选逻辑
+function filterCards() {
+    const kw = searchInput.value.trim().toLowerCase();
+    const cat = categorySelect.value;
+    const plat = platformSelect.value;
+    allCards.forEach(card=>{
+        const cCat = card.dataset.category;
+        const cTags = card.dataset.tags.split(',').map(x=>x.trim());
+        const name = card.querySelector('.app-name, .promo-title').innerText.toLowerCase();
+        const desc = card.querySelector('.app-desc, .promo-desc').innerText.toLowerCase();
+
+        let okKw = !kw || name.includes(kw) || desc.includes(kw);
+        let okCat = !cat || cCat === cat;
+        let okPlat = !plat || cTags.includes(plat);
+
+        if(okKw && okCat && okPlat){
+            card.classList.remove('hidden-item');
+        }else{
+            card.classList.add('hidden-item');
+        }
+    })
+}
+searchInput.addEventListener('input',filterCards);
+categorySelect.addEventListener('change',filterCards);
+platformSelect.addEventListener('change',filterCards);
+
+// 主题切换
+function applyTheme(key) {
+    document.body.setAttribute("data-theme",key);
+    themeSelect.value = key;
+    localStorage.setItem(STORAGE_KEY,key);
+}
+function getSystemTheme() {
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+    return dark.matches ? "standard-dark":"standard-light";
+}
+const saved = localStorage.getItem(STORAGE_KEY);
+applyTheme(saved ? saved : getSystemTheme());
+themeSelect.onchange = ()=>applyTheme(themeSelect.value);
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change",()=>{
+    if(!localStorage.getItem(STORAGE_KEY)) applyTheme(getSystemTheme());
+})
+</script>
+</body>
+</html>
