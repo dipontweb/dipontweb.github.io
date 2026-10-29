@@ -170,18 +170,26 @@ body[data-theme="transparent-dark"] { /* 通透深 */
 const STORAGE_KEY = 'dipontstore_theme';
 // 应用数据库（宣传卡片也放这里）
 const appDB = {
-    "demo-one":{
-        icon:"icons/app-icon-example.png",
-        name:"示例应用",
-        category:"工具",
-        desc:"这是一段应用简介，在这里填写软件功能、版本说明等内容。支持多平台打包下载。",
+    "vscode":{
+        icon:"https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxj7kCzMIlSC20SNjaJf9GmESvWFqgy6FNrwzWSIu2lzePyWSz8zg09RAX43OFexidzEE3_7l3auaKk4w9ktJdqg-&format=source&h=307",
+        name:"VS code",
+        category:"开发",
+        desc:"你要此网站同款编辑器吗?Visual Studio Code 是一款轻量开源代码编辑器，支持几乎所有编程语言，拥有丰富扩展生态，支持语法高亮、智能补全、调试、Git 版本控制，跨平台运行，自定义程度高。",
         downloads:[
-            {platform:"Windows x64",url:"#"},
-            {platform:"Windows ARM",url:"#"},
-            {platform:"macOS ARM64",url:"#"},
-            {platform:"APK v8a",url:"#"},
-            {platform:"iOS arm64",url:"#"},
-            {platform:"鸿蒙(手机)",url:"#"}
+            {platform:"Windows x64",url:"https://code.visualstudio.com/thank-you?dv=win64user&build=stable"},
+            {platform:"Windows ARM",url:"https://code.visualstudio.com/thank-you?dv=win32arm64user&build=stable"},
+            {platform:"macOS ARM64",url:"https://code.visualstudio.com/thank-you?dv=darwinarm64&build=stable"},
+            {platform:"macOS 86-64",url:"https://code.visualstudio.com/thank-you?dv=darwinx64&build=stable"},
+            {platform:"macOS Universal",url:"https://code.visualstudio.com/thank-you?dv=osx&build=stable"},
+            {platform:"Linux x64 deb",url:"https://code.visualstudio.com/thank-you?dv=linux64_deb&build=stable"},
+            {platform:"Linux arm64 deb",url:"https://code.visualstudio.com/thank-you?dv=linuxarm64_deb&build=stable"},
+            {platform:"Linux arm32 deb",url:"https://code.visualstudio.com/thank-you?dv=linuxarmhf_deb&build=stable"},
+            {platform:"Linux x64 rpm",url:"https://code.visualstudio.com/thank-you?dv=linux64_rpm&build=stable"},
+            {platform:"Linux arm64 rpm",url:"https://code.visualstudio.com/thank-you?dv=linuxarm64_rpm&build=stable"},
+            {platform:"Linux arm32 rpm",url:"https://code.visualstudio.com/thank-you?dv=linuxarmhf_rpm&build=stable"},
+            {platform:"Linux x64 tar.gz",url:"https://code.visualstudio.com/thank-you?dv=linux64&build=stable"},
+            {platform:"Linux arm64 tar.gz",url:"https://code.visualstudio.com/thank-you?dv=linuxarm64&build=stable"},
+            {platform:"Linux arm32 tar.gz",url:"https://code.visualstudio.com/thank-you?dv=linuxarmhf&build=stable"}
         ]
     },
     "linux-demo":{
