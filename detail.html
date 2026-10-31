@@ -192,15 +192,17 @@ const appDB = {
             {platform:"Linux arm32 tar.gz",url:"https://code.visualstudio.com/thank-you?dv=linuxarmhf&build=stable"}
         ]
     },
-    "linux-demo":{
-        icon:"icons/app-icon-example-2.png",
-        name:"Linux工具",
-        category:"实用",
-        desc:"支持Deb、AppImage包，同时适配鸿蒙电脑端。",
+    "hmcl":{
+        icon:"https://docs.hmcl.net/assets/img/hmcl.png",
+        name:"HMCL",
+        category:"游戏",
+        desc:"想玩MC,网易版却更新慢、模组贵、商业化严重、服务器土豆,官方国际版很贵,盗版mc安装包有风险,PCL2和众多国内MC启动器(包括新版HMCL)遭封杀?我们提供了3.16.4的HMCL启动器,HMCL是一个开源的MC启动器,完全免费,比较轻量,支持特别多平台,我们提供了3.16.4版让您可以正常下载MC,模组还完全免费!如果你是比较老机型的,请在下载列表中点击“HMCL怀旧版”(jar和sh需要用java打开,我们同时提供了java的下载链接).",
         downloads:[
-            {platform:"Linux amd64.deb",url:"#"},
-            {platform:"Linux amd64.AppImage",url:"#"},
-            {platform:"鸿蒙(电脑)",url:"#"}
+            {platform:"Windows X64",url:"#"},
+            {platform:"jar",url:"#"},
+            {platform:"sh",url:"#"},
+            {platform:"Windows X86(Java)",url:"#"},
+            {platform:"sh",url:"#"}
         ]
     },
     "promo001":{
@@ -224,8 +226,10 @@ const appId = getUrlParam("id");
 const data = appDB[appId];
 
 if(!data){
-    document.querySelector(".wrap").innerHTML = `<div style="text-align:center;padding:40px;">找不到这个应用</div>`;
-    document.getElementById("pageTitle").innerText = "详情 - 不存在";
+    document.querySelector(".wrap").innerHTML = `<div style="text-align:center;padding:40px;">恭喜您🤩🤩🤩幸运用户,您已被渡鸦拼好兵商城超值0元购计划选中👍👍👍,现在订阅智能推送广告畅听套餐即可免费开启小保险盲盒一个,奖品最高价值2000万哈夫币😍😍😍,皇室特供童叟无欺👑👑👑,
+广告听听不花钱🥰，订阅就送小保险🤩，您别闲来您别烦😭,贴心服务在耳边🥳🥳🥳，要想打仗不吃亏，您得瞧瞧我这对，渡鸦战
+场大礼包🎁，不买您就亏到老，从头顶到脚底板，装备给您整全套，渡鸦拼好兵商城，买来胜利买来安全，买来第二天的太阳照样亮堂堂🌞🌞🌞  (选自9D Jonas Zhang 在2026年10月17日的Teams状态消息)。<a href="https://www.dsas-jonas-wordmaster.cn" target="_blank">Jonas,治一治你的反作弊系统!<strong>(在狄邦单词通作弊的<s>统统是给!!!</s><i>你啥也没看到,对吧</i>)</strong>(doge)</a>棍木棍母棍母棍母🤪🤪🤪。 (--七年级匠心打造--)</div>`;
+    document.getElementById("pageTitle").innerText = "详情 - 这里似乎只有成百上千的棍母…… 棍母棍母~";
 }else{
     document.getElementById("pageTitle").innerText = "详情 - " + data.name;
     document.getElementById("appIcon").src = data.icon;
